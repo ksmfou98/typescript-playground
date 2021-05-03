@@ -24,4 +24,4 @@ https://academy.dream-coding.com/courses/typescript
 - [x] moveGame  
 - [x] Loading 
 
-### 
+### OOP
