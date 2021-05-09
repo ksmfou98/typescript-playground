@@ -45,7 +45,33 @@
   }
 
   const maker = new CoffeeMaker(32); // 여기 괄호 안에는 생성자에 값을 넘겨주는 값을 적으면 됨
-  maker.fillCoffeeBeans(10)
-  console.log(maker);
-  console.log(maker.makeCoffee(2));
+  maker.fillCoffeeBeans(10);
+
+  class User {
+    get fullName(): string {
+      // get으로 선언하면 함수형태이지만 접근할땐 변수처럼 접근한다.
+      return `${this.firstName} ${this.lastName}`;
+    }
+
+    private internalAge = 4;
+    get age(): number {
+      return this.internalAge;
+    }
+
+    set age(num: number) {
+      this.internalAge = num;
+    }
+
+    constructor(public firstName: string, public lastName: string) {
+      this.firstName = firstName;
+      this.lastName = lastName;
+    }
+  }
+
+  const user = new User("steve", "jobs");
+  console.log(user.fullName);
+  user.firstName = "dohyun";
+  console.log(user.fullName);
+  user.age = 6
+  console.log(user)
 }
