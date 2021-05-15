@@ -7,11 +7,17 @@
     hasMilk: boolean;
   };
 
-  interface CoffeeMaker{
-      makeCoffee(shots: number): CoffeeCup;
+  interface CoffeeMaker {
+    makeCoffee(shots: number): CoffeeCup;
   }
 
-  class CoffeeMachine implements CoffeeMaker {
+  interface CommercialCoffeeMaker {
+    makeCoffee(shots: number): CoffeeCup;
+    fillCoffeeBeans(beans: number): void;
+    clean(): void;
+  }
+
+  class CoffeeMachine implements CoffeeMaker, CommercialCoffeeMaker {
     // 클래스 안에서 변수를 선언할때는 const, let을 사용하지 않음
     private static BEANS_GRAMM_PER_SHOT: number = 7; // static을 붙이면 class level 이 됨   class level : class 와 연결이 되어 있기 때문에 object마다 생성되지않음
     private coffeeBeans: number = 0; // instance (or object) level
@@ -30,6 +36,10 @@
         throw new Error("value for beans should be greater than 0");
       }
       this.coffeeBeans += beans;
+    }
+
+    clean() {
+      console.log("cleaning the machine ... 🧼");
     }
 
     private grindBeans(shots: number) {
@@ -52,15 +62,35 @@
       console.log("heating up...🔥 ");
     }
 
-    makeCoffee (shots: number): CoffeeCup  {
+    makeCoffee(shots: number): CoffeeCup {
       this.grindBeans(shots);
       this.preheat();
       return this.extract(shots);
-      
-    };
+    }
   }
 
-  const maker = CoffeeMachine.makeMachine(32); // 여기 괄호 안에는 생성자에 값을 넘겨주는 값을 적으면 됨
-  maker.fillCoffeeBeans(10);
-  
+  class AmateurUser {
+    constructor(private machine: CoffeeMaker) {}
+    makeCoffee() {
+      const coffee = this.machine.makeCoffee(2);
+      console.log(coffee);
+    }
+  }
+
+  class ProBarista {
+    constructor(private machine: CommercialCoffeeMaker) {}
+    makeCoffee() {
+      const coffee = this.machine.makeCoffee(2);
+      console.log(coffee);
+      this.machine.fillCoffeeBeans(45);
+      this.machine.clean();
+    }
+  }
+
+  const maker: CoffeeMachine = CoffeeMachine.makeMachine(32);
+  const amateur = new AmateurUser(maker);
+  const pro = new ProBarista(maker);
+  amateur.makeCoffee();
+  console.log("---------------------------");
+  pro.makeCoffee();
 }
