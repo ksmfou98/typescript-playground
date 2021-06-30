@@ -35,3 +35,9 @@ https://academy.dream-coding.com/courses/typescript
 - [x] inheritance
 - [x] polymorphism
 - [x] composition
+
+### Generic
+
+- [x] function
+- [x] class
+- [x] constrains
