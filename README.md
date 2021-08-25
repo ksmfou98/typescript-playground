@@ -1,4 +1,4 @@
-# TypeScript-tutorial-study
+# TypeScript-playground
 
 ## 강의
 
